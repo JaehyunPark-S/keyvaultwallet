@@ -1,0 +1,130 @@
+var keyVaultLib = require('./keyVaultLib');
+var express = require('express');
+var router = express.Router();
+var WalletLib = require('./WalletLib');
+
+function getVersion(idUrl) {
+  var words = idUrl.split('/');
+
+  let version = '';
+  if (words.length > 0) {
+    version = words[words.length - 1];
+  }
+  return version;
+}
+
+async function setSecret(secretName, mnemonic) {
+  let isExsistSecret = await keyVaultLib.getSecretVersion(secretName, 1);
+  if (isExsistSecret != 0) {
+    console.log("ERROR : Already secretName was made by somebody")
+    return {
+      error: {
+        code: 9016,
+        message: "ERROR : Already secretName was made by somebody"
+      }
+    };
+  }
+  if (mnemonic == null) {
+    mnemonic = WalletLib.generate();
+  }
+
+  let result = await keyVaultLib.setSecret(secretName, mnemonic);
+  console.log(result);
+
+  let secretVersion = getVersion(result.id);
+
+  return {
+    secretName: secretName,
+    secretVersion: secretVersion,
+    mnemonic: mnemonic
+  };
+
+}
+router.post('/generate', async function (req, res, next) {
+  let { secretName } = req.body;
+  console.log(secretName);
+  let rtn = await setSecret(secretName);
+  res.json(rtn);
+});
+
+router.post('/restore', async function (req, res, next) {
+  let { secretName, mnemonic } = req.body;
+  console.log(secretName);
+  let rtn = await setSecret(secretName, mnemonic);
+  res.json(rtn);
+});
+
+
+// router.get('/getSecretVersion', async function (req, res, next){
+//   let {secretName, maxResults} = req.body;
+//   let result = await keyVaultLib.getSecretVersion(secretName, maxResults);
+//   console.log(result);
+//   if(result != 0) {
+//     console.log("ERROR : already secretName was made by somebody");
+//     resulttrue = result;
+//   } else {
+//     console.log("You can make this secretName")
+//   }
+
+//   res.json({
+//     resulttrue : resulttrue
+//   }); 
+// });
+
+
+router.get('/address', async function (req, res, next) {
+  let { secretName, secretVersion, keyName, path } = req.body;
+
+  let mnemonic = await keyVaultLib.getSecret(secretName, secretVersion);
+  console.log(mnemonic);
+  let keyVersionResult = await keyVaultLib.getKeyVersions(keyName, 1);
+
+  let needImport = keyVersionResult.length == 0;
+  let keyVersion = "";
+  if (!needImport) {
+    keyVersion = getVersion(keyVersionResult[0].kid);
+    let isGetKey = await keyVaultLib.getKey(keyName, keyVersion);
+    if (isGetKey.tags.secretName != secretName || isGetKey.tags.path != path) {
+      needImport = true;
+    }
+  }
+
+  let pairKey = await WalletLib.getPairKey(mnemonic.value, path);
+
+  if (needImport) {
+    
+    let importKeyResult = await keyVaultLib.importKey(keyName, pairKey.privateKey, pairKey.pubX, pairKey.pubY, { secretName: secretName, path: path });
+    
+    keyVersion = getVersion(importKeyResult.key.kid);
+  }
+
+  let address = await WalletLib.getAddress(Buffer.concat([pairKey.pubX, pairKey.pubY]));
+
+  console.log(address);
+
+  res.json({
+    address,
+    keyVersion
+  });
+
+});
+
+router.post('/sign', async function (req, res, next) {
+  let { keyName, keyVersion, message } = req.body;
+
+  let messageBuf = Buffer.from(message, 'Base64');
+  // let digestBuf = Buffer.from(digest, 'Base64'),
+  //       signatureBuf = Buffer.from(signature, 'hex');
+  let signatureResult = await keyVaultLib.sign(keyName, keyVersion, 'ECDSA256', messageBuf);
+  console.log(signatureResult);
+  let signature = signatureResult.result
+  let verifyResult = await keyVaultLib.verify(keyName, keyVersion, 'ECDSA256', messageBuf, signature);
+  console.log(verifyResult);
+
+  res.json({
+    signature: signature.toString('hex'),
+    verify: verifyResult.value
+  });
+});
+
+module.exports = router;
