@@ -123,7 +123,8 @@ router.post('/sign', async function (req, res, next) {
 
   res.json({
     signature: signature.toString('hex'),
-    verify: verifyResult.value
+    verify: verifyResult.value,
+    keyName
   });
 });
 
