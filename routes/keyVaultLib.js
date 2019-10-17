@@ -1,11 +1,7 @@
 var KeyVault = require('azure-keyvault');
 var AuthenticationContext = require('adal-node').AuthenticationContext;
+const {clientId, clientSecret , vaultUri} = require('../config/config').keyVaultLibConfig;
 
-var clientId = "43de83c5-8b28-4ccd-b4f5-aaa86d86b1ba";
-
-var clientSecret = "GiN_BSx5SW/MlPWm5-QZFyAvBIpSm6.2";
-
-var vaultUri = "https://aztestvault1.vault.azure.net";
 
 // Authenticator - retrieves the access token
 var authenticator = function (challenge, callback) {

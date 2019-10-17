@@ -1,10 +1,8 @@
 const msRestAzure = require('ms-rest-azure');
 const KeyVaultManagementClient = require('azure-arm-keyvault');
+const {subscriptionId, resourceGroup , vaultName, tenantGUID} = require('../config/config');
 
-const subscriptionId = 'bb57642d-03b8-44f1-999d-497eef5faf47';
-const resourceGroup = 'aztestvault1';
-const vaultName = 'aztestvault12';
-const tenantGUID = '5687646b-6d96-41a3-a987-01c60ef92c0';
+
 
 // Interaction Login
 let client;
