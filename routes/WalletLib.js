@@ -7,7 +7,7 @@ var keyVaultLib = require('./keyVaultLib');
 
 module.exports.generate = () => {
     let mnemonic = bip39.generateMnemonic();
-    console.log(mnemonic);
+    // console.log(mnemonic);
     return mnemonic;
 }
 let mnemonic = bip39.generateMnemonic();
@@ -20,7 +20,7 @@ let entropyBn = new BN(entropy, 'hex');
 // console.log(entropyBn.toString(2));
 
 let mnemonictoo = bip39.entropyToMnemonic(entropy);
-console.log(mnemonictoo);
+// console.log(mnemonictoo);
 
 let seed = bip39.mnemonicToSeedSync(mnemonic);
 // console.log(seed.toString('hex'));
@@ -48,7 +48,7 @@ for (let i = startIndex; i < endIndex; i++) {
     // console.log(unCompressedPubKey.toString('hex'));
     let address = ethUtil.bufferToHex(ethUtil.pubToAddress(unCompressedPubKey));
 
-    console.log(address);
+    // console.log(address);
 }
 
 module.exports.getPairKey = (mnemonic, path) => {
