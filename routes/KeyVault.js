@@ -1,6 +1,6 @@
 const msRestAzure = require('ms-rest-azure');
 const KeyVaultManagementClient = require('azure-arm-keyvault');
-const {subscriptionId, resourceGroup , vaultName, tenantGUID} = require('../config/config');
+const {subscriptionId, resourceGroup , vaultName, tenantGUID} = require('../config/config').keyVaultConfig;
 
 
 
