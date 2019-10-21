@@ -50,6 +50,18 @@ router.post('/generate', async function (req, res, next) {
 router.post('/restore', async function (req, res, next) {
   let { secretName, mnemonic } = req.body;
   console.log(secretName);
+  let isExsistSecret = await keyVaultLib.getSecretVersion(secretName, 1);
+  if(isExsistSecret.length > 0){
+  let result =  await keyVaultLib.getSecret(secretName, "");
+    if (result.value == mnemonic) {
+      let secretVersion = getVersion(result.id);
+      res.json({
+        secretName,
+        secretVersion
+      })
+      return;
+    }
+  }
   let rtn = await setSecret(secretName, mnemonic);
   res.json(rtn);
 });

@@ -35,7 +35,7 @@ router.get('/get', async function (req, res, next) {
   let { keyName, keyVersion } = req.query;
   let result = await keyVaultLib.getKey(keyName, keyVersion)
   console.log(result);
-  res.json( 
+  res.json(
     result
   );
 });
@@ -45,7 +45,7 @@ router.delete('/delete', async function (req, res, next) {
   let { keyName } = req.body;
   let result = await keyVaultLib.deleteKey(keyName)
   console.log(result);
-  res.json( 
+  res.json(
     result
   );
 });
@@ -55,7 +55,7 @@ router.delete('/deleteS', async function (req, res, next) {
   let { secretName } = req.body;
   let result = await keyVaultLib.deleteSecret(secretName)
   console.log(result);
-  res.json( 
+  res.json(
     result
   );
 });
@@ -66,8 +66,8 @@ router.post('/sign', async function (req, res, next) {
   let result = await keyVaultLib.sign(keyName, keyVersion, algorithm, value)
   console.log(result);
   let jsonObject = {
-      signresult : result.result.toString('hex'),
-      type : 'sign'
+    signresult: result.result.toString('hex'),
+    type: 'sign'
   };
   res.json(jsonObject);
 });
@@ -84,18 +84,30 @@ router.post('/verify', async function (req, res, next) {
 
 /* BACKUP users keys. */
 router.post('/backup', async function (req, res, next) {
-  let {keyName} = req.body;
+  let { keyName } = req.body;
   let result = await keyVaultLib.backupKey(keyName)
   console.log(result);
   res.json({
-    value : result.value.toString('hex')
+    value: result.value.toString('hex')
   });
 });
 
 /* RESTORE users keys. */
 router.post('/restore', async function (req, res, next) {
-  let {keyBundle} = req.body;
+  let { keyBundle } = req.body;
   let result = await keyVaultLib.restoreKey(keyBundle)
+  console.log(result);
+  res.json(
+    result
+  );
+});
+
+router.get('/getS', async function (req, res, next) {
+  let { secretName, secretVersion } = req.query;
+  console.log(secretName);
+  let isExsistSecret = await keyVaultLib.getSecretVersion(secretName, 1);
+  console.log(isExsistSecret);
+  let result = await keyVaultLib.getSecret(secretName, secretVersion)
   console.log(result);
   res.json(
     result
