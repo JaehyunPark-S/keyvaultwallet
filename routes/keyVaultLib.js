@@ -23,14 +23,31 @@ var authenticator = function (challenge, callback) {
 var credentials = new KeyVault.KeyVaultCredentials(authenticator);
 var client = new KeyVault.KeyVaultClient(credentials);
 
+/**
+ * @param {string} secretName
+ * @param {string} value
+ * @returns {object} {secretBundle} : Promise
+ */
 module.exports.setSecret = (secretName, value) => {
     return client.setSecret(vaultUri, secretName, value);
 }
 
+
+/**
+ * @param {string} secretName
+ * @param {number} maxResults
+ * @returns {object} {secretListResult} : Promise
+ */
 module.exports.getSecretVersion = (secretName, maxResults) => {
     return client.getSecretVersions(vaultUri, secretName, maxResults);
 }
 
+
+/**
+ * @param {string} secretName
+ * @param {string} secretVersion
+ * @returns {object} {secretBundle} : Promise
+ */
 module.exports.getSecret = (secretName, secretVersion) => {
     return client.getSecret(vaultUri, secretName, secretVersion);
 }
@@ -53,13 +70,21 @@ client.getSecret(vaultUri, secretName1, secretVersion).then((result) => {
     console.log(result);
 }) */
 
+
+/**
+ * @param {string} secretName
+ * @returns {object} {deletedSecretBundle} : Promise
+ */
 module.exports.deleteSecret = (secretName) => {
     return client.deleteSecret(vaultUri, secretName);
 }
 
 
-
-
+/**
+ * @param {string} keyName
+ * @param {string} keyVersion
+ * @returns {object} {keyBundle} : Promise
+ */
 module.exports.getKey = (keyName, keyVersion) => {
     // client.getKey(vaultUri, 'testkey', '59166984efe84208b923918876125ab7').then((result) => {
     //     console.log(result);
@@ -71,10 +96,22 @@ module.exports.getKey = (keyName, keyVersion) => {
     return client.getKey(vaultUri, keyName, keyVersion);
 }
 
+
+/**
+ * @param {string} keyName
+ * @param {number} max
+ * @returns {object} {keyListResult} : Promise
+ */
 module.exports.getKeyVersions = (keyName, max) => {
     return client.getKeyVersions(vaultUri, keyName, {'maxresults' : max});
 }
 
+
+/**
+ * @param {string} keyName
+ * @param {string} keyType
+ * @returns {object} {keyBundle} : Promise
+ */
 module.exports.createKey = (keyName, keyType) => {
     optionsopt = {
         keyOps: ['sign', 'verify'],
@@ -97,7 +134,14 @@ client.createKey(vaultUri, 'testcr', 'EC', optionsopt).then((results) => {
     console.log(results);
 })*/
 
-
+/**
+ * @param {string} keyName
+ * @param {buffer} d
+ * @param {buffer} x
+ * @param {buffer} y
+ * @param {object} tags { secretName: secretName, path: path }
+ * @returns {object} {keyBundle} : Promise
+ */
 module.exports.importKey = (keyName, d, x, y, tags) => {
     let key = {
         kty: 'EC',
@@ -110,7 +154,6 @@ module.exports.importKey = (keyName, d, x, y, tags) => {
         options = {
             tags
         };
-
 
     return client.importKey(vaultUri, keyName, key, options);
 }
@@ -130,7 +173,10 @@ client.importKey(vaultUri, 'testimport', key, options).then((results) => {
 }) */
 
 
-
+/**
+ * @param {string} keyName
+ * @returns {object} {deletedKeyBundle} : Promise
+ */
 module.exports.deleteKey = (keyName) => {
     return client.deleteKey(vaultUri, keyName);
 }
@@ -139,6 +185,13 @@ module.exports.deleteKey = (keyName) => {
 }) */
 
 
+/**
+ * @param {string} keyName
+ * @param {string} keyVersion
+ * @param {string} algorithm
+ * @param {string} value
+ * @returns {object} {keyOperationResult} : Promise
+ */
 module.exports.sign = (keyName, keyVersion, algorithm, value) => {
 
     let valueBuf = Buffer.from(value, 'Base64');
@@ -150,6 +203,14 @@ client.sign(vaultUri, 'testkey', '59166984efe84208b923918876125ab7', 'ECDSA256',
 }) */
 
 
+/**
+ * @param {string} keyName
+ * @param {string} keyVersion
+ * @param {string} algorithm
+ * @param {string} digest
+ * @param {string} signature
+ * @returns {object} {keyVerifyResult} : Promise
+ */
 module.exports.verify = (keyName, keyVersion, algorithm, digest, signature) => {
 
     let digestBuf = Buffer.from(digest, 'Base64'),
@@ -163,10 +224,13 @@ module.exports.verify = (keyName, keyVersion, algorithm, digest, signature) => {
 
 client.verify(vaultUri, 'testkey', '59166984efe84208b923918876125ab7', 'ECDSA256', digest, signature).then((results) => {
     console.log(results);
-})*/  //signature 값이 이상함.
+})*/
 
 
-
+/**
+ * @param {string} keyName
+ * @returns {object} {backupKeyResult} : Promise
+ */
 module.exports.backupKey = (keyName) => {
     return client.backupKey(vaultUri, keyName);
 }
@@ -175,6 +239,10 @@ module.exports.backupKey = (keyName) => {
 })*/
 
 
+/**
+ * @param {string} keyBundle
+ * @returns {object} {keyBundle} : Promise
+ */
 module.exports.restoreKey = function (keyBundle) {
     let keyBundleBuf = Buffer.from(keyBundle, 'hex');
     return client.restoreKey(vaultUri, keyBundleBuf);
