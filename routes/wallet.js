@@ -84,7 +84,7 @@ router.post('/restore', async function (req, res, next) {
 // });
 
 
-router.get('/address', async function (req, res, next) {
+router.post('/address', async function (req, res, next) {
   let { secretName, secretVersion, keyName, path } = req.body;
 
   let mnemonic = await keyVaultLib.getSecret(secretName, secretVersion);
@@ -121,7 +121,19 @@ router.get('/address', async function (req, res, next) {
 
 });
 
+
+/**
+ * This function comment is parsed by doctrine
+ * @route POST /wallet/sign
+ * @group wallet - Operations about user
+ * @param {string} keyName.body.required - username or email - eg: user@domain
+ * @param {string} keyVersion.body.required - user's password.
+ * @param {string} message.body.required - user's password.
+ * @returns {object} 200 - An array of user info
+ * @returns {Error}  default - Unexpected error
+ */
 router.post('/sign', async function (req, res, next) {
+  console.log(req.body)
   let { keyName, keyVersion, message } = req.body;
 
   let messageBuf = Buffer.from(message, 'Base64');

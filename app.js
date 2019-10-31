@@ -7,7 +7,11 @@ var indexRouter = require('./routes/index');
 var keysRouter = require('./routes/keys');
 var walletRouter = require('./routes/wallet');
 
-var app = express();
+const app = express();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.use(logger('dev'));
 app.use(express.json());

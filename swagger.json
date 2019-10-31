@@ -1,0 +1,349 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server Keystore server",
+        "version": "1.0.3",
+        "title": "Keystore",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "####@####.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Wallet",
+            "description": "cloud wallet"
+        },
+        {
+            "name": "Keys",
+            "description": "cloud wallet"
+        } 
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/wallet/sign": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Return signature",
+                "description": "Returns signature, value, keyName",
+                "operationId": "sign",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyName",
+                        "in": "formData",
+                        "description": "Input your keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkey"
+                    },
+                    {
+                        "name": "keyVersion",
+                        "in": "formData",
+                        "description": "Input your keyVersion",
+                        "required": true,
+                        "type": "string",
+                        "default": "930f183a6f9f4bab99b32206e008eedd"
+                    },
+                    {
+                        "name": "message",
+                        "in": "formData",
+                        "description": "Input your privateKey",
+                        "required": true,
+                        "type": "string",
+                        "default": "Vgyk4k6SQnGJ2rMtR19XTBYBik3pfF9+aJXAfjk7hoY="
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/wallet/generate": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Return secretKey info",
+                "description": "Returns secretName, secretVersion, mnemonic",
+                "operationId": "generate",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "secretName",
+                        "in": "formData",
+                        "description": "Generate secretName",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/wallet/restore": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Return secretKey info",
+                "description": "Returns secretName, secretVersion \nBut make new secret return /generate",
+                "operationId": "restore",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "secretName",
+                        "in": "formData",
+                        "description": "Input your secretName",
+                        "required": true,
+                        "type": "string",
+                        "default": "dgsafd2415124"
+                    },
+                    {
+                        "name": "mnemonic",
+                        "in": "formData",
+                        "description": "Input your mnemonic",
+                        "required": true,
+                        "type": "string",
+                        "default": "common tooth lonely custom lab dignitsy bring spike window industry exclude earth"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/wallet/address": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Return address",
+                "description": "Returns address, keyVersion",
+                "operationId": "address",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "secretName",
+                        "in": "formData",
+                        "description": "Input your secretName",
+                        "required": true,
+                        "type": "string",
+                        "default": "secret124124421"
+                    },
+                    {
+                        "name": "secretVersion",
+                        "in": "formData",
+                        "description": "Input your secretVersion",
+                        "required": true,
+                        "type": "string",
+                        "default": "81700bf6090e41558b047e2748ee2c9f"
+                    },
+                    {
+                        "name": "keyName",
+                        "in": "formData",
+                        "description": "Input your keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkeyccg"
+                    },
+                    {
+                        "name": "path",
+                        "in": "formData",
+                        "description": "Input path",
+                        "required": true,
+                        "type": "string",
+                        "default": "m/44'/60'/0'/0/0"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/create": {
+            "post": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return key info",
+                "description": "Returns keyInfo, crv, Buffer X, Buffer Y",
+                "operationId": "create",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyName",
+                        "in": "formData",
+                        "description": "Create keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkeygg"
+                    },
+                    {
+                        "name": "keyType",
+                        "in": "formData",
+                        "description": "Input keyType",
+                        "required": true,
+                        "type": "string",
+                        "default": "EC"
+                    }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/import": {
+            "put": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return key info",
+                "description": "Returns keyInfo, crv, Buffer X, Buffer Y",
+                "operationId": "import",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyName",
+                        "in": "formData",
+                        "description": "Import keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkeygg"
+                    },
+                    {
+                        "name": "d",
+                        "in": "formData",
+                        "description": "Input privateKey",
+                        "required": true,
+                        "type": "string",
+                        "default": "Vgyk4k6SQnGJ2rMtR19XTBYBik3pfF9+aJXAfjk7hoY="
+                    },
+                    {
+                        "name": "x",
+                        "in": "formData",
+                        "description": "Input publicX",
+                        "required": true,
+                        "type": "string",
+                        "default": "zXcMOqKdEB6a/AR7ZjI6j15vsQXB46XV4nVye4Zh4PY="
+                    },
+                    {
+                        "name": "y",
+                        "in": "formData",
+                        "description": "Input publicY",
+                        "required": true,
+                        "type": "string",
+                        "default": "c6UhjMtcT0zt2HIxpBgHj/Ns4JJ/TNkgXJAuypdZrdI="
+                    }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "externalDocs": {
+            "description": "Find out more about Swagger",
+            "url": "http://swagger.io"
+        }
+    }
+}
