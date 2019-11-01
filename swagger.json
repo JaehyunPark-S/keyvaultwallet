@@ -90,7 +90,7 @@
                 "tags": [
                     "Wallet"
                 ],
-                "summary": "Return secretKey info",
+                "summary": "Return secret info",
                 "description": "Returns secretName, secretVersion, mnemonic",
                 "operationId": "generate",
                 "consumes": [
@@ -128,7 +128,7 @@
                 "tags": [
                     "Wallet"
                 ],
-                "summary": "Return secretKey info",
+                "summary": "Return secret info",
                 "description": "Returns secretName, secretVersion \nBut make new secret return /generate",
                 "operationId": "restore",
                 "consumes": [
@@ -326,6 +326,386 @@
                         "type": "string",
                         "default": "c6UhjMtcT0zt2HIxpBgHj/Ns4JJ/TNkgXJAuypdZrdI="
                     }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/get": {
+            "get": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return key info",
+                "description": "Returns keyInfo, crv, Buffer X, Buffer Y",
+                "operationId": "get",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyName",
+                        "in": "query",
+                        "description": "Input your keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkey"
+                    },
+                    {
+                        "name": "keyVersion",
+                        "in": "query",
+                        "description": "Input your keyVersion",
+                        "required": true,
+                        "type": "string",
+                        "default": "1d59b68fe3184d499de2c52524c3a833"
+                    }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/getS": {
+            "get": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return secretInfo",
+                "description": "Return secretInfo",
+                "operationId": "getS",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "secretName",
+                        "in": "query",
+                        "description": "Input your secretName",
+                        "required": true,
+                        "type": "string",
+                        "default": "dgsafd2415"
+                    },
+                    {
+                        "name": "secretVersion",
+                        "in": "query",
+                        "description": "Input your secretVersion",
+                        "required": true,
+                        "type": "string",
+                        "default": "b111414890e4402e8ffb784096959fe3"
+                    }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/delete": {
+            "delete": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return key info",
+                "description": "Returns keyInfo, crv, Buffer X, Buffer Y",
+                "operationId": "delete",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyName",
+                        "in": "formData",
+                        "description": "Input your keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkeygg"
+                    }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/deleteS": {
+            "delete": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return secretInfo",
+                "description": "Return secretInfo",
+                "operationId": "deleteSecret",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "secretName",
+                        "in": "formData",
+                        "description": "Input your secretName",
+                        "required": true,
+                        "type": "string",
+                        "default": "dgsafd"
+                    }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/sign": {
+            "post": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return signature",
+                "description": "Return signature",
+                "operationId": "sign",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyName",
+                        "in": "formData",
+                        "description": "Input your keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkey"
+                    },
+                    {
+                        "name": "keyVersion",
+                        "in": "formData",
+                        "description": "Input your keyVersion",
+                        "required": true,
+                        "type": "string",
+                        "default": "1d59b68fe3184d499de2c52524c3a833"
+                    },
+                    {
+                        "name": "value",
+                        "in": "formData",
+                        "description": "Input your privateKey",
+                        "required": true,
+                        "type": "string",
+                        "default": "Vgyk4k6SQnGJ2rMtR19XTBYBik3pfF9+aJXAfjk7hoY="
+                    },
+                    {
+                        "name": "algorithm",
+                        "in": "formData",
+                        "description": "Input algorithm",
+                        "required": true,
+                        "type": "string",
+                        "default": "ECDSA256"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/verify": {
+            "post": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return value",
+                "description": "Return value",
+                "operationId": "verify",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyName",
+                        "in": "formData",
+                        "description": "Input your keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkey"
+                    },
+                    {
+                        "name": "keyVersion",
+                        "in": "formData",
+                        "description": "Input your keyVersion",
+                        "required": true,
+                        "type": "string",
+                        "default": "1d59b68fe3184d499de2c52524c3a833"
+                    },
+                    {
+                        "name": "digest",
+                        "in": "formData",
+                        "description": "Input your privateKey",
+                        "required": true,
+                        "type": "string",
+                        "default": "Vgyk4k6SQnGJ2rMtR19XTBYBik3pfF9+aJXAfjk7hoY="
+                    },
+                    {
+                        "name": "algorithm",
+                        "in": "formData",
+                        "description": "Input algorithm",
+                        "required": true,
+                        "type": "string",
+                        "default": "ECDSA256"
+                    },
+                    {
+                        "name": "signature",
+                        "in": "formData",
+                        "description": "Input signature",
+                        "required": true,
+                        "type": "string",
+                        "default": "c41cad91ebaa252e346b63275421b418299485a49cfd27a1b4b85aae22a1eeeb9806daf859918382873f60cf4eb2dd24cdaf5d680cb1638e4fa87f47fb287187"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/backup": {
+            "post": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return keyBundle",
+                "description": "Return keyBundle",
+                "operationId": "backup",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyName",
+                        "in": "formData",
+                        "description": "Input your keyName",
+                        "required": true,
+                        "type": "string",
+                        "default": "testkeygg"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/keys/restore": {
+            "post": {
+                "tags": [
+                    "Keys"
+                ],
+                "summary": "Return keyInfo",
+                "description": "Return keyInfo",
+                "operationId": "restore",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "keyBundle",
+                        "in": "formData",
+                        "description": "Input your keyBundle",
+                        "required": true,
+                        "type": "string",
+                        "default": "26417a7572654b65795661756c744b65794261636b757056312e6d6963726f736f66742e636f6d65794a72615751694f6949304d7a6731596a41335969316b4e5451334c5451795a545574595755355a5330324d54426b597a4d355a475a685a6a67694c434a68624763694f694a53553045745430464655434973496d567559794936496b45784d6a6844516b4d7453464d794e54596966512e69414f36383451623336497079566361474761535f56397872746367444b45317a4150444d71426a6f32616a38396c6263444253706758376c393043744475426e73626746364e724179304f4f5076414a443136536a4c314353766b756530454f6a7665514c64356543376168677146566e794a6841515276344d305a707a624337635343546b3947544e4b7a5a7932724a35416452714b53504d61545665617454427653465f4654337049434436436c5061586642724750534730356f7777545a31653253527853395741636f647130435a4239494c496468616a66424c654d575f6257344d566b2d2d3854334764753145436a5a78435047756851704163783745437570342d72483946796e366b4a45644e48386970436e32796c35333266694d7541396750684573743558506653464e675038655a6a65373258556235335a6436676145637a3737685465643573436f7136672e4c4a4f31766a5352313375617a324976512d424e73672e556546636346414e556871515236714f3434365a354170754c5a69394452375a464b54596f63614d69547363796842507041555846584872394d437766764a335352536a632d736a5562636b48304263566549484e48337233593767427530705238614e74362d67504f627a564d47544c7850777555356d414170305a383252464f653148684143705f704e336964687a3239584138456778305358464371685138754b4441787451387a486d315a54725f654a6c693876556154334146612d7337307570686c45634d42613733336b50336430794d516c32496e76377a473862694f4270474a706a575572785835696c6564556e714f392d3035547a3054516c455533334239323745552d446b414832414c49395378426b68652d3238505a3035724a5659555a48695a6f4f774248373854415a4c735764664b4c433446346937436c77394931396e624a724d4f3974307458676a765556446768433457514e534d5a33316d61676c54393862636c717279543236526b767842684555455075785f4b61663166713674324b4142797279556d324647336679316c694a51567162665335317667786e452d4e794c506d337638334562386e5631652d5f2d36573570785459516234424c37783270524739353764532d4c51446f446a37383735354c5378526976426f4854356f48775435374d6c2d44525251396d6c4239483151757a36527a37494f2d445235484c554e324a7a6b4a47554c47364d65344752344973736b6f4159385f305678654c39757179354f6a626966447476424c37594a63553248516d793133534f614a53546f376b38462d4532774d52465748525a766c4249555a364875506842395953656c52575a502d71486c4542707478476d4b4a33555a416b554877533352625648346341496e6a706d515a7637653445706764594f784f64424d494e434b7173474c376877425656326175546856713554616867594a59507049645f43557732577a4133346b433930384d416b66656c3179492d6d6b4a743848426c7961586b6a4b504b513334574b3478414a766863395973365f4a6c776e58724b624a302d574f363165644730494950617a57306b6a587073414f2d595a786c4650364449575a676b7070435366435f6e424456624677425634374b6a395f2d577778496e41334655626b64362d52496848425f396356514a5f4c6b422d316777316c4c556c4b4c3443343466445a5839574c62793545464f5f446a3853752d59366439325052305f59496a6e59654e42575a6268784c3664427a5a32774a7247524e62726e52524d315f4d65772d6b6872376136675433454b515968765f47716c336d51773745524471486c6e4e577963696a4f4338372d43556775356645744f4775424f643835394746354d786469305162453132716538336558472d4d4f484a39466963696f7949554949324b585f675476476374414e6568363279335370463872774577436d5f775f4e504d44717252716378355070744567385977627774584252344e2d6f417654776b4a74444f48684f3734772d746e30417145785631663041693977704954474c724d3134724d7850336d57554633676f6630656a653859686b395954784e655448634c626d2d413355366a476a4f557553687457496a50686e5a3154754b534e634d487a7743616772775a565f6e31333344612d2d6e7270426b4578625936755a5a3733447474616666414a395f66427a47456570413578756e673566663262323666615377725f5068307461704e47566f356c48624b4b445a5f7044465f764c6d796c3443532d393242726f326b6d38515941316a7372785634664f766a566f695f49517247513455732d4732797a566477585248524e36766b355337693154686d46444c4a7852776f414a5366457247526c46326a51704d5f44396a4b6f4d5869423264774d477656475371704641583872647a4c31502d574766496646712d666e7349774d5369727336454f38726d4d2d6b35627a643237794571474e6243566e57696c4b31494276366e54384f4d6267576365414f77687264633045795177677075353633504e6d70644f695965456370716d34374c41693154384e77465a7372666b36703230764853337677444942736569794e675362546d2d78327a655a662d524b4232486673466a6c6c414f2d425a4f2d6a4f5068514944754e706557656978354c6977324458376d437677437133726b38726a634e6c3634465a5474525665386d41516e6151507141775578746277344d5263355755397659686c493634487149383164475641634a6c42484c67564455476e7a716e67492d494c5650757457496e704156794c304279712d67386e4d442d6c626245756b4e70755f356544673047714f754b4657326370685933582d30596846423837617a7943444161704779625871582d774f306c7a725a32417073433559615a765f324d4f6370464b325261456f38384954614830665a56634b72307a714c4a423351614a566e38504f74324d6e5236557744586c6650364b705f3341784d692d7a644e66386153444a6e773335763449716250666f70385846437379354a43373479583643345f333552514c4e4c4f52676b394f33774462466a33327a7039557332365138686e566e39316d6a6f50704d34447971414b385937454739584539436b4c36774f73333370633938635a5570734843364536712d77745f4e644b465963444a65635f6561685572646865614d747a3769546c57754b3749775773675f794a6c6d3541784947394d7631734d72777a5153377454436a7636784a556a32587a4652566f434a4a7979627572576b435f347230703649594c487177302d493553794d3343636d724f364b65646c4b5f5a746a6b556162455661663331707835464a6c724a433773454636326c5a543137635446356f623353386c4e6c544b4d55756954486f444946455a76795f6f653777766751503731394e752d596a666c48733664362d374e3679484544314637505876564649306d4f4939754a785f4e4e6e7a385944343170416e7469317142316f315279306138696f43317443444e7452526c64745a4a6d512d4b526f526d6271555045657962444967696e4d6750326a684363346f43644e4a467a6f38494964492d4b396f387975443074366b73544757724c333549493558644f426e384a52665f73666f4837334b716d4d383535745a6e4e70754a306a4c746c484676416c2d2d333152483678613079584e756d364a644b4e543548484734394469304b3146435365784d44597730455a68554f444538587a64414c3055666a38384758424f794f6575696350506d346164795556364c6a376a7a315f4b69765452695f514f4e7146442d476843314f48676b6e4a514a6b3843474c4231513536636f4f355962354161644f7a396a535655366a63677153357462463465784a7964416d796a596968777362304b4e506d35564e7a6d4b314c354e326655704e79694b7851373267566c704b353233506b3054667867444f78464f396155446b50426c373838786f7979476b4a386964785979364f424d715a346c56346d32636d463648366671344533303631467458457037624d5953464b49536356653871345f723161417179767a4d5a4142446f4277317179716c36574374353373735375645766655f476e34356449397166506a46644272536a435a5a4a5a46536f63747639596758423247735558696c6b59563073547671426f475f6162363866334d306e3773394179794a4e7470636175437732705a534554494f734365315f35557a456b5f4e5567575f686e557734314d79366970344e3150696a4f33414e346d7a32466e62495764356a4f464b76435f346a6c6d7144626c687278364c5574642d4e47496243714252304f4c754b3764326f4b776c7a4a7561424e6934716b4350705f6b6e784b4f6b54593231357065316b4f5649384c50656a57684f56595558715a524e385f3070467a5f636f715f51664b4d447455387746684e4a55415955346e4c6e535555544e7848537053735a3151366454775a363355367533704634774269665a6a41746d7759646f6639536878654c526b71354d74505650717a373731676965533636643775745346395651593047594741507675524c5f716f6569785f626176457977354a566e4451644b3978326d6354722d596a6469474e437a55465661653035564e7953616735696a4a754b416d4c50686e6145615f61634c327a4a374f6f7a45764a717147705368464c5a67434750626b6673736c78774868797846326f757a36364c4145516a4a574c4978654b45437574794254364d7a717657575562336f6b50434e6437725a654c4f396c4936516f4969594179564e376c706f5f6b49544a4458515f775f564971555f4d315457587a6f437a3946733841706639345a532d626f45452d3672495f4466676d394a44756841686f30526141554b68473873324c4e375233766d44495975784841367176374e6e356471467430345f5770684332667170375041552d444562357854394e38517475446e554641476e4b4b68794676314547557450666f67396d4a39727941356b34376a326d564c32422d42573850782d336c396953447352624e726835547138753355456e61705769364e4d5f4b316a55324f566973546e4559327146556f3976346f677452774654533542436f4c67426d426a496b682d30554e496c523052654838437064654a686753784358434b436b456c5a4d4176306d454d634372614c595954615655584151583069696963625a38523764573661517763705464324b6f375678544835734e6275644e784e59315a7462393246543541637238704d45714730387979697649574334684d636c723850774a424f45547756385134416959552d63796c76503172656653436e6f3350527a4e5a6c7641345f4654657452625f4e4e64497170586976517577574359634454377a647242492d794a55416d564b4d516e615a394d5370754b3959554b54543555646235674b317855614945537955472d6c44445857643844654c50516159423468437231616f7961784f6b6536326c77685879397252673341327a7a6a7266534f796e6b6c306d4f396a79357538526c2d676a68754559466a6c6d5f34796f654c324c77357270426277626d676b4b636e67497a324a49515f68514c7a3755456c76582d6c4351414f4e4c342d784a673063443377316a30446f474162694873304b317148537950304b77504e5a6c7641367562557741495455624c7359693677762d7738676a765863674c794f59356230426145334559476d547a627a365a466a364e3958424146765357366c614b493736772d336733314c6f6a476b3659342d37556d565f3369456b79694976754d37624e2d5a58746664355834467a50754e78336e535249564d766f33326e42593644514e6c4b534c4c396f496472425553457242534247507674476537596e416f38656437394f74695034416878496e4c6974533058774266744a596a565a7a365635724c5766724145415a546870464f4166345f704d3235675a7146736845495868345f37323258626e51727935437933575a657476683271755a657777532d6c546369774b50754a34733351446953437063424131396955594441386635627138784f63457157474c33514e70396c5349466a77365539424a786d6f575258515438324355306562683555524f74487844644675625070717551737a494f354b574c524849382d43446961466b485233517948316b44356e737641346b4576374e6b4f352d564e4c34505f425a6d65335347363644673869395753735763414c4e375178737673555153636c2d7048383559654d58707347476e3836584f6858494e74467045373572646939335a79534a797841664674493177433773556c7370326d394e354e5743546a774b73754c7054537a5a5172562d4d744c7a37373238676a54754458767a6b5f35504e387852566b556a47764a58664869476a36696b74635a495f4d6f526c4b576a6d43303534704a5350516c303731614e4c4174734e4f30517968456e2d4f634d6e5072566652556476444a736c7a6c41544c6c4b79645562766d6876657a56624e3279437665503632323174664d4f48457a575a743965306d5a6174394f4f4169746b694c49676a2d705a7258654c4157524c4b6f4963465546474d623076656f52734936416f705a356a654b71713037384f726776654930576e764833496d374c4a49615966374c67522d3869536f663957645862634449393269523469524c585f414a7a30343777555374777763624a343175693964373937372d61634c6347447732494f6958744c3169706a786b4d3532784639726e4955524e733346366a306e4c774a646c784733646c45315154744650593942306a6c4b6130346b31727257464d6d35422d557347315f706b5a61705a6e70445873646f4166536c5351367078776c62727453494432396f69742d4748726d67716b67456d3748316632646e3050336f73516d6e4950664e664c39386e3234514c5f4f3675796f627068354b356c446c6c784132527466754f615348456857703668634d516937643337653052657876734b4764473469372d5762364e38687558623031567351546242537a615136386c615a447346612d634f4b725246384f69703456723766337230636a4a70425743534e6364496555456b4447416450346647374b5f557434433172473461745f56466253757a5976644e745f6545375744416856416b67475941444e6131583047794c61316458537648323048494e33512e38664e59524241536379756665793570737752314a77"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",

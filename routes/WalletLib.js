@@ -51,6 +51,12 @@ for (let i = startIndex; i < endIndex; i++) {
     // console.log(address);
 }
 
+
+/**
+ * @param {string} mnemonic
+ * @param {string} path
+ * @returns {object} {privateKey & pubKey} : Promise
+ */
 module.exports.getPairKey = (mnemonic, path) => {
     let seed = bip39.mnemonicToSeedSync(mnemonic);
 
@@ -69,6 +75,11 @@ module.exports.getPairKey = (mnemonic, path) => {
     }
 }
 
+
+/**
+ * @param {string} unCompressedPubKey
+ * @returns {object} {address} : Promise
+ */
 module.exports.getAddress = (unCompressedPubKey) => {
 
     let address = ethUtil.bufferToHex(ethUtil.pubToAddress(unCompressedPubKey));

@@ -66,8 +66,8 @@ router.post('/sign', async function (req, res, next) {
   let result = await keyVaultLib.sign(keyName, keyVersion, algorithm, value)
   console.log(result);
   let jsonObject = {
-    signresult: result.result.toString('hex'),
-    type: 'sign'
+    signresult: result.result.toString('hex')
+    //type: 'sign'
   };
   res.json(jsonObject);
 });
