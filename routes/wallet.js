@@ -43,7 +43,20 @@ async function setSecret(secretName, mnemonic) {
 router.post('/generate', async function (req, res, next) {
   let { secretName } = req.body;
   console.log(secretName);
+  let underbar = "_";
+  let isUnderbar = secretName.indexOf(underbar);
+  if(isUnderbar != -1) {
+    console.log("ERROR : Cannot include underbar")
+    res.json({
+      error: {
+        code: 9999,
+        message: "ERROR : Cannot include underbar"
+      }
+    });
+    return;
+  }
   let rtn = await setSecret(secretName);
+  
   res.json(rtn);
 });
 
@@ -51,8 +64,8 @@ router.post('/restore', async function (req, res, next) {
   let { secretName, mnemonic } = req.body;
   console.log(secretName);
   let isExsistSecret = await keyVaultLib.getSecretVersion(secretName, 1);
-  if(isExsistSecret.length > 0){
-  let result =  await keyVaultLib.getSecret(secretName, "");
+  if (isExsistSecret.length > 0) {
+    let result = await keyVaultLib.getSecret(secretName, "");
     if (result.value == mnemonic) {
       let secretVersion = getVersion(result.id);
       res.json({
@@ -104,9 +117,9 @@ router.post('/address', async function (req, res, next) {
   let pairKey = await WalletLib.getPairKey(mnemonic.value, path);
 
   if (needImport) {
-    
+
     let importKeyResult = await keyVaultLib.importKey(keyName, pairKey.privateKey, pairKey.pubX, pairKey.pubY, { secretName: secretName, path: path });
-    
+
     keyVersion = getVersion(importKeyResult.key.kid);
   }
 

@@ -23,7 +23,7 @@
         {
             "name": "Keys",
             "description": "cloud wallet"
-        } 
+        }
     ],
     "schemes": [
         "http",
@@ -80,8 +80,7 @@
                 },
                 "security": [
                     {
-                        "api_key": [
-                        ]
+                        "api_key": []
                     }
                 ]
             }
@@ -264,7 +263,8 @@
                         "required": true,
                         "type": "string",
                         "default": "EC"
-                    }],
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -326,7 +326,8 @@
                         "required": true,
                         "type": "string",
                         "default": "c6UhjMtcT0zt2HIxpBgHj/Ns4JJ/TNkgXJAuypdZrdI="
-                    }],
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -372,7 +373,8 @@
                         "required": true,
                         "type": "string",
                         "default": "1d59b68fe3184d499de2c52524c3a833"
-                    }],
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -418,7 +420,8 @@
                         "required": true,
                         "type": "string",
                         "default": "b111414890e4402e8ffb784096959fe3"
-                    }],
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -456,7 +459,8 @@
                         "required": true,
                         "type": "string",
                         "default": "testkeygg"
-                    }],
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -494,7 +498,8 @@
                         "required": true,
                         "type": "string",
                         "default": "dgsafd"
-                    }],
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -720,6 +725,22 @@
                         "api_key": []
                     }
                 ]
+            }
+        },
+        "securityDefinitions": {
+            "api_key": {
+                "type": "bearerAuth",
+                "name": "bearerAuth",
+                "in": "header"
+            },
+            "keystore_auth": {
+                "type": "oauth2",
+                "authorizationUrl": "https://keystore.swagger.io/oauth/authorize",
+                "flow": "implicit",
+                "scopes": {
+                    "read:keys": "read your keys",
+                    "write:keys": "modify keys in your account"
+                }
             }
         },
         "externalDocs": {
