@@ -13,7 +13,7 @@
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
-    "host": "localhost:3000",
+    "host": "52.141.33.223:3000",
     "basePath": "/",
     "tags": [
         {
@@ -80,7 +80,8 @@
                 },
                 "security": [
                     {
-                        "api_key": []
+                        "api_key": [
+                        ]
                     }
                 ]
             }
