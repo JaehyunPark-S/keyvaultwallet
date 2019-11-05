@@ -62,8 +62,8 @@ module.exports.getPairKey = (mnemonic, path) => {
 
     let node = bip32.fromSeed(seed);
     let child = node.derivePath(path);
-    let privateKey = child.derive(0).privateKey;
-    let publicKey = child.derive(0).publicKey;
+    let privateKey = child.privateKey;
+    let publicKey = child.publicKey;
     let unCompressedPubKey = ethUtil.importPublic(publicKey);
     let pubX = unCompressedPubKey.slice(0, 32);
     let pubY = unCompressedPubKey.slice(32);
