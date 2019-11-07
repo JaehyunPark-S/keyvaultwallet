@@ -136,10 +136,13 @@ router.post('/address', async function (req, res, next) {
 
 
 router.post('/sign', async function (req, res, next) {
-  console.log(req.body)
+  // console.log(req.body)
+  // console.log(req.query)
+  // console.log(req.param)
+  // console.log(req)
   let { keyName, keyVersion, message } = req.body;
-
   let messageBuf = Buffer.from(message, 'Base64');
+  //console.log(messageBuf.toString("hex"));
   // let digestBuf = Buffer.from(digest, 'Base64'),
   //       signatureBuf = Buffer.from(signature, 'hex');
   let signatureResult = await keyVaultLib.sign(keyName, keyVersion, 'ECDSA256', messageBuf);
