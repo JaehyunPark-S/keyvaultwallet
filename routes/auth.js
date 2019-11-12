@@ -16,9 +16,8 @@ router.get("/login", function (req, res, next) {
     },
       secretObj.secret,    // 비밀 키
       {
-        expiresIn: '9999999999m'    // 유효 시간은 5분
+        expiresIn: '99999y'    // 유효 시간은 5분
       })
-
 
 
     res.cookie("user", token);

@@ -45,7 +45,7 @@ router.post('/generate', async function (req, res, next) {
   console.log(secretName);
   let underbar = "_";
   let isUnderbar = secretName.indexOf(underbar);
-  if(isUnderbar != -1) {
+  if (isUnderbar != -1) {
     console.log("ERROR : Cannot include underbar")
     res.json({
       error: {
@@ -56,13 +56,12 @@ router.post('/generate', async function (req, res, next) {
     return;
   }
   let rtn = await setSecret(secretName);
-  
+
   res.json(rtn);
 });
 
 router.post('/restore', async function (req, res, next) {
   let { secretName, mnemonic } = req.body;
-  console.log(secretName);
   let isExsistSecret = await keyVaultLib.getSecretVersion(secretName, 1);
   if (isExsistSecret.length > 0) {
     let result = await keyVaultLib.getSecret(secretName, "");
@@ -76,6 +75,7 @@ router.post('/restore', async function (req, res, next) {
     }
   }
   let rtn = await setSecret(secretName, mnemonic);
+  delete rtn["mnemonic"];
   res.json(rtn);
 });
 
@@ -99,8 +99,30 @@ router.post('/restore', async function (req, res, next) {
 
 router.post('/address', async function (req, res, next) {
   let { secretName, secretVersion, keyName, path } = req.body;
+  let isExsistSecret = await keyVaultLib.getSecretVersion(secretName, 1);
+  console.log(isExsistSecret);
+  let error;
+  if (isExsistSecret.length == 0) {
+    error = { message: "ERROR : Is not exist secretName" };
+  } else {
+    let isSecretVersion = getVersion(isExsistSecret[0].id)
+    if (isSecretVersion != secretVersion) {
+      error = { message: "ERROR : Is not exist secretVersion" };
+    }
+  }
 
-  let mnemonic = await keyVaultLib.getSecret(secretName, secretVersion);
+  if (error) {
+    res.status(400).json({
+      error: {
+        ...error,
+        code: "400"
+      }
+    });
+    return;
+  }
+
+  let secretResult = await keyVaultLib.getSecret(secretName, secretVersion);
+  let mnemonic = secretResult.value
   console.log(mnemonic);
   let keyVersionResult = await keyVaultLib.getKeyVersions(keyName, 1);
 
@@ -114,7 +136,7 @@ router.post('/address', async function (req, res, next) {
     }
   }
 
-  let pairKey = await WalletLib.getPairKey(mnemonic.value, path);
+  let pairKey = await WalletLib.getPairKey(mnemonic, path);
 
   if (needImport) {
 
