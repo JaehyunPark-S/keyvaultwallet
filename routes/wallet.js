@@ -16,7 +16,6 @@ function getVersion(idUrl) {
 async function setSecret(secretName, mnemonic) {
   let isExsistSecret = await keyVaultLib.getSecretVersion(secretName, 1);
   if (isExsistSecret != 0) {
-    console.log("ERROR : Already secretName was made by somebody")
     return {
       error: {
         code: 9016,
@@ -42,11 +41,9 @@ async function setSecret(secretName, mnemonic) {
 }
 router.post('/generate', async function (req, res, next) {
   let { secretName } = req.body;
-  console.log(secretName);
   let underbar = "_";
   let isUnderbar = secretName.indexOf(underbar);
   if (isUnderbar != -1) {
-    console.log("ERROR : Cannot include underbar")
     res.json({
       error: {
         code: 9999,
