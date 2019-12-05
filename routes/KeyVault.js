@@ -14,7 +14,7 @@ msRestAzure
     })
     .then(vaults => {
         console.dir(vaults, {depth: null, colors: true});
-        const paramethers = {
+        const parameters = {
             location: 'East US',
             properties: {
                 sku: {family: 'A', name: 'standard'},
